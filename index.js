@@ -11,7 +11,7 @@ import commentRouter from "./src/routers/comment.router.js";
 const app = express();
 app.use(cors());
 var corsOptions = {
-  origin: "https://blogging-app-server-navy.vercel.app/",
+  origin: "http://localhost:5173/",
   optionsSuccessStatus: 200,
 };
 app.use(express.json());
