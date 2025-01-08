@@ -1,6 +1,7 @@
 import express from "express";
 import connectDB from "./src/db/index.js";
 import dotenv from "dotenv"
+import cors from "cors"
 import cookieParser from "cookie-parser";
 import userRouter from "./src/routers/user.router.js"
 import postRouter from "./src/routers/post.router.js"
@@ -9,14 +10,16 @@ import commentRouter from "./src/routers/comment.router.js"
 
 
 const app = express();
-
+app.use(cors())
 app.use(express.json());
 app.use(cookieParser())
+
 app.use("/api/v1" , userRouter)
 app.use("/api/v1" , postRouter)
 app.use("/api/v1" , likeRouter)
 app.use("/api/v1" , commentRouter)
 dotenv.config();
+
 
 
 
