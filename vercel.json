@@ -8,6 +8,9 @@
         }
     ],
     "routes": [
-        { "source": "/api/v1/:path*", "destination": "/src/:path*" }
+        {
+            "src": "/api/v1/(.*)",
+            "dest": "/api/v1/$1"
+          }
     ]
 }
