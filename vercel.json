@@ -9,8 +9,12 @@
     ],
     "routes": [
         {
-            "src": "/api/v1/(.*)",
-            "dest": "/api/v1/$1"
-          }
+            "src": "./(.*)",
+            "dest": "./index.js", 
+            "methods": ["GET", "POST", "PUT", "PATCH", "OPTIONS"], 
+            "headers": {
+                "Access-Control-Allow-Origin": "*"
+            } 
+        }
     ]
 }
