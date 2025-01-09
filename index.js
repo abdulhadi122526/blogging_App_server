@@ -9,12 +9,13 @@ import likeRouter from "./src/routers/like.router.js";
 import commentRouter from "./src/routers/comment.router.js";
 
 const app = express();
-app.use(cors());
-var corsOptions = {
-  origin: "http://localhost:5173/",
-  optionsSuccessStatus: 200,
-};
+
 app.use(express.json());
+app.use(cors({
+  origin: 'http://localhost:5173/',
+  credentials: true,
+  methods: ['GET', 'POST' , 'PUT' , 'DELETE'],
+}));
 app.use(cookieParser());
 
 app.use("/api/v1", userRouter);
