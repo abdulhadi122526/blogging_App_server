@@ -5,9 +5,13 @@ import bcrypt from "bcrypt";
 // generate tokens
 
 const generateAccessToken = (User) => {
-  return jwt.sign({ email: User.email , id: User._id }, process.env.ACCESS_JWT_SECRET, {
-    expiresIn: "6h",
-  });
+  return jwt.sign(
+    { email: User.email, id: User._id },
+    process.env.ACCESS_JWT_SECRET,
+    {
+      expiresIn: "6h",
+    }
+  );
 };
 const generateRefreshToken = (User) => {
   return jwt.sign({ email: User.email }, process.env.REFRESH_JWT_SECRET, {
@@ -73,16 +77,22 @@ const loginUser = async (req, res) => {
 // logout user
 
 const logoutUser = (req, res) => {
-  res.clearCookie("refreshToken");
+  const isTokenExist = req.cookies.refreshToken
+  if(!isTokenExist) return res.status(400).json({message: 'cookie expired'});
+  res.clearCookie("refreshToken", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "None",
+  });
   res.json({ message: "user logout successfully" });
 };
 
 // regenerate access token
 
 const regenerateAccessToken = async (req, res) => {
-    const refreshToken = req.cookies.refreshToken || req.body.refreshToken;
-    if (!refreshToken)
-      return res.status(401).json({ message: "no refresh token available" });
+  const refreshToken = req.cookies.refreshToken || req.body.refreshToken;
+  if (!refreshToken)
+    return res.status(401).json({ message: "no refresh token available" });
 
   try {
     const decodedToken = jwt.verify(

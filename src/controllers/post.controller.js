@@ -27,6 +27,14 @@ const getPosts = async (req , res ) => {
     const allPosts = await Posts.find()
     .populate("user" , 'username')
     .populate('like' , 'username')
+    .populate({
+      path: "comments",
+      select: "text",
+      populate:{
+        path: "user",
+        select: "username"
+      }
+    })
 
     res.json(allPosts)
   } catch (error) {

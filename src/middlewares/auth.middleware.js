@@ -1,7 +1,9 @@
 import jwt from "jsonwebtoken"
 const authenticateUser = (req, res, next) => {
-    const token = req.headers["authorization"];
-    if (!token) return res.status(404).json({ message: "no token found" });
+  const token = req.headers["authorization"];
+    if (!token) return res.status(401).json({ message: "no token found" });
+    console.log(token);
+    
 
 
      jwt.verify(

@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "password is required"],
     },
+    profilePic:{
+        type:String,
+        requires: [true, "profile picture is required"]
+    }
   },
   { timestamps: true }
 );

@@ -2,16 +2,21 @@ import Like from "../models/like.model.js";
 import Post from "../models/post.model.js";
 
 const likePost = async (req, res) => {
-  const { postId } = req.body; // kis post pr like krna hai us ko is k zariye get krna hai
-
+  const { postId } = req.body;
   try {
-    const isLikedPost = await Like.findOne({ user: req.userId, post: postId }); // check krna hai k pehly se like hai ya nahi
+    const isLikedPost = await Like.findOneAndDelete({ user: req.userId, post: postId });
+    
+    const unLikePost = await Post.findByIdAndUpdate(
+      postId,
+      { $pull: { like: req.userId } },
+      { new: true }
+    ); // like ko post me push krny k liye
     if (isLikedPost)
       return res
-        .status(400)
-        .json({ message: "you have already liked this post" });
+        .status(200)
+        .json({ message: "Post unliked"});
 
-    const likedPost = await Like.create({ user: req.userId, post: postId }); // like create krny k liye user me user aey ga or post me kis post pr like kia hai wo 
+    const likedPost = await Like.create({ user: req.userId, post: postId });
 
     const post = await Post.findByIdAndUpdate(
       postId,
@@ -24,4 +29,4 @@ const likePost = async (req, res) => {
   }
 };
 
-export {likePost}
+export { likePost };

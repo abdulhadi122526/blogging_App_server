@@ -7,13 +7,12 @@ import userRouter from "./src/routers/user.router.js";
 import postRouter from "./src/routers/post.router.js";
 import likeRouter from "./src/routers/like.router.js";
 import commentRouter from "./src/routers/comment.router.js";
+import path from "path"
 
 const app = express();
 
 app.use(express.json());
-app.use(cors({
-  origin: 'http://localhost:5173'
-}));
+app.use(cors())
 app.use(cookieParser());
 
 app.use("/api/v1", userRouter);
