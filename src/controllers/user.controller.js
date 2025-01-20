@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import mongoose from "mongoose";
 
 // generate tokens
 
@@ -77,8 +78,8 @@ const loginUser = async (req, res) => {
 // logout user
 
 const logoutUser = (req, res) => {
-  const isTokenExist = req.cookies.refreshToken
-  if(!isTokenExist) return res.status(400).json({message: 'cookie expired'});
+  const isTokenExist = req.cookies.refreshToken;
+  if (!isTokenExist) return res.status(400).json({ message: "cookie expired" });
   res.clearCookie("refreshToken", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",

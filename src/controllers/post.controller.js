@@ -1,11 +1,10 @@
 import Posts from "../models/post.model.js"
 
 const creatPost = async (req , res) => {
-    const {title , content} = req.body;
+    const {content} = req.body;
 
     try {
         const createPost = await Posts.create({
-            title,
             content,
             user: req.userId
         })
