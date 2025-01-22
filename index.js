@@ -7,12 +7,19 @@ import userRouter from "./src/routers/user.router.js";
 import postRouter from "./src/routers/post.router.js";
 import likeRouter from "./src/routers/like.router.js";
 import commentRouter from "./src/routers/comment.router.js";
-import path from "path"
+
 
 const app = express();
+const corsOptions = {
+  origin: 'http://localhost:5173', // Allow requests from your frontend
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+  credentials: true, // Allow cookies
+};
 
+app.use(cors(corsOptions))
+app.options('*', cors(corsOptions));
 app.use(express.json());
-app.use(cors())
 app.use(cookieParser());
 
 app.use("/api/v1", userRouter);
